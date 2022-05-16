@@ -7,7 +7,7 @@ export default class Card extends Component {
       cardAttr1, cardAttr2, cardAttr3,
       cardImage, cardRare, cardTrunfo } = this.props;
     return (
-      <>
+      <section>
         <h4 data-testid="name-card">{ cardName }</h4>
         <img src={ cardImage } alt={ cardName } data-testid="image-card" />
         <p data-testid="description-card">{ cardDescription }</p>
@@ -16,7 +16,7 @@ export default class Card extends Component {
         <p data-testid="attr3-card">{ cardAttr3 }</p>
         <p data-testid="rare-card">{ cardRare }</p>
         { cardTrunfo === true ? <p data-testid="trunfo-card">Super Trunfo</p> : <> </> }
-      </>
+      </section>
     );
   }
 }
