@@ -14,6 +14,7 @@ class App extends React.Component {
     cardTrunfo: false,
     hasTrunfo: false,
     isSaveButtonDisabled: true,
+    cardSave: [],
   };
 
   inputValidations = () => {
@@ -52,14 +53,23 @@ class App extends React.Component {
   }
 
   initialState = () => {
-    this.setState({ cardName: '',
+    this.setState((previousState) => ({
+      cardName: '',
       cardDescription: '',
       cardAttr1: 0,
       cardAttr2: 0,
       cardAttr3: 0,
       cardImage: '',
       cardRare: '',
-      cardTrunfo: false });
+      cardTrunfo: false,
+      cardSave: [...previousState.cardSave, previousState],
+    }));
+  };
+
+  resetState = (pare) => {
+    pare.preventDefault();
+    this.setState(this.initialState());
+    this.isTrunfo();
   };
 
   isTrunfo = () => {
@@ -73,11 +83,6 @@ class App extends React.Component {
     }
   };
 
-  resetState = () => {
-    this.setState(this.initialState());
-    this.isTrunfo();
-  };
-
   handleChange = (event) => {
     const { value, name, checked } = event.target;
     this.setState({ [name]: name === 'cardTrunfo' ? checked : value },
@@ -86,15 +91,8 @@ class App extends React.Component {
 
   render() {
     const {
-      cardName,
-      cardImage,
-      cardDescription,
-      cardAttr1,
-      cardAttr2,
-      cardAttr3,
-      cardRare,
-      cardTrunfo,
       isSaveButtonDisabled,
+      cardSave,
     } = this.state;
     return (
       <div>
@@ -105,16 +103,20 @@ class App extends React.Component {
           onInputChange={ this.handleChange }
           isSaveButtonDisabled={ isSaveButtonDisabled }
         />
-        <Card
-          cardName={ cardName }
-          cardImage={ cardImage }
-          cardDescription={ cardDescription }
-          cardAttr1={ cardAttr1 }
-          cardAttr2={ cardAttr2 }
-          cardAttr3={ cardAttr3 }
-          cardRare={ cardRare }
-          cardTrunfo={ cardTrunfo }
-        />
+        {cardSave.map((value) => (
+          <Card
+            key={ value.cardName }
+            cardName={ value.cardName }
+            cardImage={ value.cardImage }
+            cardDescription={ value.cardDescription }
+            cardAttr1={ value.cardAttr1 }
+            cardAttr2={ value.cardAttr2 }
+            cardAttr3={ value.cardAttr3 }
+            cardRare={ value.cardRare }
+            cardTrunfo={ value.cardTrunfo }
+          />
+        ))}
+        <Card { ...this.state } />
       </div>
     );
   }
