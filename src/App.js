@@ -13,6 +13,8 @@ class App extends React.Component {
     cardRare: '',
     cardTrunfo: false,
     isSaveButtonDisabled: true,
+    // hasTrunfo: false,
+    // cardSave: [],
   };
 
   inputValidations = () => {
@@ -38,7 +40,6 @@ class App extends React.Component {
     + parseInt(cardAttr2, 10)
     + parseInt(cardAttr3, 10)
     > totalAttributeValue;
-    console.log(sumOfAttributes);
 
     if (!cardName || !cardDescription || !cardImage || !cardRare) {
       this.setState({ isSaveButtonDisabled: true });
@@ -50,6 +51,21 @@ class App extends React.Component {
       this.setState({ isSaveButtonDisabled: false });
     }
   }
+
+initialState = () => {
+  this.setState({ cardName: '',
+    cardDescription: '',
+    cardAttr1: 0,
+    cardAttr2: 0,
+    cardAttr3: 0,
+    cardImage: '',
+    cardRare: '',
+    cardTrunfo: false });
+}
+
+resetState = () => {
+  this.setState(this.initialState());
+}
 
   handleChange = (event) => {
     const { value, name, checked } = event.target;
@@ -73,6 +89,8 @@ class App extends React.Component {
       <div>
         <h1>Tryunfo</h1>
         <Form
+          { ...this.state }
+          onSaveButtonClick={ this.resetState }
           onInputChange={ this.handleChange }
           isSaveButtonDisabled={ isSaveButtonDisabled }
         />
