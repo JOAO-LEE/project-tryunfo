@@ -6,7 +6,7 @@ export default class Form extends Component {
     const { cardName, cardDescription, cardAttr1,
       cardAttr2, cardAttr3, cardImage, cardRare,
       cardTrunfo, isSaveButtonDisabled,
-      onInputChange, onSaveButtonClick } = this.props;
+      onInputChange, onSaveButtonClick, hasTrunfo } = this.props;
     return (
       <section>
         <form action="">
@@ -95,16 +95,19 @@ export default class Form extends Component {
               </option>
             </select>
           </label>
-          <label htmlFor="supercard">
-            <input
-              name="cardTrunfo"
-              checked={ cardTrunfo }
-              onChange={ onInputChange }
-              id="supercard"
-              type="checkbox"
-              data-testid="trunfo-input"
-            />
-          </label>
+          { hasTrunfo === true ? (<p>Você já tem um Super Trunfo em seu baralho</p>
+          ) : (
+            <label htmlFor="supercard">
+              <input
+                name="cardTrunfo"
+                checked={ cardTrunfo }
+                onChange={ onInputChange }
+                id="supercard"
+                type="checkbox"
+                data-testid="trunfo-input"
+              />
+            </label>
+          )}
           <button
             disabled={ isSaveButtonDisabled }
             onClick={ onSaveButtonClick }
@@ -131,4 +134,5 @@ Form.propTypes = {
   isSaveButtonDisabled: PropTypes.bool.isRequired,
   onInputChange: PropTypes.func.isRequired,
   onSaveButtonClick: PropTypes.func.isRequired,
+  hasTrunfo: PropTypes.bool.isRequired,
 };

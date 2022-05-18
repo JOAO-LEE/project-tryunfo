@@ -12,9 +12,8 @@ class App extends React.Component {
     cardImage: '',
     cardRare: '',
     cardTrunfo: false,
+    hasTrunfo: false,
     isSaveButtonDisabled: true,
-    // hasTrunfo: false,
-    // cardSave: [],
   };
 
   inputValidations = () => {
@@ -52,25 +51,37 @@ class App extends React.Component {
     }
   }
 
-initialState = () => {
-  this.setState({ cardName: '',
-    cardDescription: '',
-    cardAttr1: 0,
-    cardAttr2: 0,
-    cardAttr3: 0,
-    cardImage: '',
-    cardRare: '',
-    cardTrunfo: false });
-}
+  initialState = () => {
+    this.setState({ cardName: '',
+      cardDescription: '',
+      cardAttr1: 0,
+      cardAttr2: 0,
+      cardAttr3: 0,
+      cardImage: '',
+      cardRare: '',
+      cardTrunfo: false });
+  };
 
-resetState = () => {
-  this.setState(this.initialState());
-}
+  isTrunfo = () => {
+    const { cardTrunfo } = this.state;
+    switch (cardTrunfo) {
+    case true:
+      this.setState({ hasTrunfo: true });
+      break;
+    default:
+      this.setState({ hasTrunfo: false });
+    }
+  };
+
+  resetState = () => {
+    this.setState(this.initialState());
+    this.isTrunfo();
+  };
 
   handleChange = (event) => {
     const { value, name, checked } = event.target;
     this.setState({ [name]: name === 'cardTrunfo' ? checked : value },
-      this.inputValidations); //
+      this.inputValidations);
   };
 
   render() {
